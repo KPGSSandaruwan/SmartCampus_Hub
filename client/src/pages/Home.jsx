@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { listingsAPI } from '../services/api';
 import Card from '../components/common/Card';
 import { 
@@ -45,10 +45,32 @@ const categoryTitles = {
 
 const Home = ({ onOpenCreateModal }) => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  const searchParam = searchParams.get('search');
+
   const [listings, setListings] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'all');
+  const [searchQuery, setSearchQuery] = useState(searchParam || '');
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+      setTimeout(() => {
+        const section = document.getElementById('categories-section');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      setSelectedCategory('all');
+    }
+
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, [categoryParam, searchParam]);
 
   useEffect(() => {
     fetchListings();
@@ -71,6 +93,11 @@ const Home = ({ onOpenCreateModal }) => {
 
   const handleCategorySelect = (catId) => {
     setSelectedCategory(catId);
+    if (catId === 'all') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category: catId });
+    }
   };
 
   const handleSearchSubmit = (e) => {
@@ -150,7 +177,7 @@ const Home = ({ onOpenCreateModal }) => {
       </section>
 
       {/* Category Tabs Bar */}
-      <section style={{ marginBottom: '2rem' }}>
+      <section id="categories-section" style={{ marginBottom: '2rem' }}>
         <div style={{
           display: 'flex',
           gap: '0.6rem',

@@ -18,7 +18,8 @@ import {
   Package,
   Key,
   Wrench,
-  ShoppingBag
+  ShoppingBag,
+  Briefcase
 } from 'lucide-react';
 
 const Navbar = ({ onOpenCreateModal }) => {
@@ -137,7 +138,7 @@ const Navbar = ({ onOpenCreateModal }) => {
                     { label: 'PickRide', icon: <Car size={16} color="#0066FF" />, path: '/rides' },
                     { label: 'Package & Parcel Pickup', icon: <Package size={16} color="#d97706" />, path: '/parcels' },
                     { label: 'Equipment Rentals', icon: <Key size={16} color="#7c3aed" />, path: '/rentals' },
-                    { label: 'Part-time Jobs', icon: <ShoppingBag size={16} color="#0066FF" />, path: '/part-time-jobs' }
+                    { label: 'Part-time Jobs', icon: <Briefcase size={16} color="#0066FF" />, path: '/?category=jobs' }
                   ].map((cat, idx) => (
                     <Link
                       key={idx}
