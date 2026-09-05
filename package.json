@@ -1,0 +1,19 @@
+{
+  "name": "byteforge-uniconnect",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "client": "npm run dev --workspace=client",
+    "server": "npm run dev --workspace=server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed": "npm run seed --workspace=server",
+    "seed:rentals": "npm run seed:rentals --workspace=server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
